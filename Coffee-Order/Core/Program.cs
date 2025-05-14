@@ -1,6 +1,6 @@
 ﻿
 
-using Coffee_Order.Core;
+using Coffee_Order.Core.Decorator;
 
 Console.WriteLine("Welcome to the Coffee Order System!");
 Console.WriteLine("Please select your coffee order:");
@@ -10,29 +10,36 @@ Console.WriteLine("3. Latte");
 Console.WriteLine("4. Mocha");
 Console.WriteLine("5. Cappuccino");
 Console.WriteLine("6. Macchiato");
+Console.WriteLine("7. Mixed Latte with Americano");
 
 int choice = int.Parse(Console.ReadLine()!);
 
-var order = new object();
+Coffee order = new Espresso();
 switch (choice)
 {
     case 1:
-       order = new Espresso();
+       order = order;
         break;
     case 2:
-        order = new Americano();
+        order = new Americano(order);
         break;
     case 3:
-        order = new Latte();
+        order = new Latte(order);
         break;
     case 4:
-        order = new Mocha();
+        order = new Mocha(order);
         break;
     case 5:
-        order = new Cappuccino();
+        order = new Cappuccino(order);
         break;
     case 6:
-        order = new Macchiato();
+        order = new Macchiato(order);
+        break;
+    case 7:
+        // Mixed Latte with Americano as Wrapper 
+        order = new Latte(order);
+        order = new Americano(order);
+        order = new Mocha(order);
         break;
     default:
         Console.WriteLine("Invalid selection. Please try again.");
